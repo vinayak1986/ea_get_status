@@ -1,0 +1,28 @@
+http://kazuar.github.io/scraping-tutorial/
+https://stackoverflow.com/questions/29890301/python-find-xpath-of-element-containing-string
+https://stackoverflow.com/questions/9487937/how-do-i-get-the-value-inside-a-td-tag-with-xpath-htmlwebunit
+https://sqa.stackexchange.com/questions/32097/how-to-find-xpath-inside-td
+
+from lxml import html
+import requests
+session_req = requests.session()
+login_url = 'https://portal.engineersaustralia.org.au/user/login?destination=estage1/applicant'
+result = session_req.get(login_url)
+tree = html.fromstring(result.text)
+auth_token = list(set(tree.xpath("//input[@name = 'form_build_id']/@value")))[0]
+payload = {'name' : 'vinayak1986@gmail.com', 'pass' : 'H312@blr', 'op' : 'Login', 'form_build_id' : auth_token, 'form_id' : 'user_login' }
+result = session_req.post(login_url, data = payload, headers = dict(referer = login_url))
+
+url = 'https://portal.engineersaustralia.org.au/estage1/applicant'
+result = session_req.get(url, headers = dict(referer = login_url))
+tree = html.fromstring(result.content)
+list(set(tree.xpath("//td[@name = 'progress-current']/@value")))[0]
+ea = open('ea', mode = 'w')
+print(result.content, file = ea)
+ea.close()
+
+tree.xpath("///html/body/div[3]/div[2]/div[1]/form/div/fieldset[2]/div/fieldset/div/table/tbody/tr/td[3]/text()")
+
+tree.xpath("//table[@class='progress-table']/tbody/tr/td[3]/text()")
+
+
