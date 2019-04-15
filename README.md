@@ -3,3 +3,6 @@ The script is used to fetch the status of the CDR application submitted to Engin
 Apr 15, 2019
 Added logic to send SMS if the status changes from 'Queued for assessment'. Also, the POST call will now try to execute 5 times if an error code is thrown.
 
+Apr 15, 2019
+Added logic to print datetime stamp with the current status.
+

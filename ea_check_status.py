@@ -1,6 +1,7 @@
 import requests
 from lxml import html
 import re
+import time, datetime
 
 # Function to get application status from EA portal.
 def get_app_status(user_name, password, login_url, status_page):
@@ -40,12 +41,13 @@ def send_sms():
 	requests.request("POST", url, data=payload, headers=headers)
 
 if __name__ == '__main__':
+	time_stamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
 	ea_username = 'vinayak1986@gmail.com'
 	ea_pwd = 'H312@blr'
 	ea_login_url = 'https://portal.engineersaustralia.org.au/user/login?destination=estage1/applicant'
 	ea_status_page = 'https://portal.engineersaustralia.org.au/estage1/applicant'
 	status = get_app_status(ea_username, ea_pwd, ea_login_url, ea_status_page)
-	print(status)
+	print('{} : {}'.format(time_stamp, status))
     # Send SMS if the status changes from 'Queued for assessment'
 	if (not re.match('Queued', status)) and status:
 		send_sms()
